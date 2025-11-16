@@ -1,0 +1,77 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block content %}
+<section class='text-center container'>
+    <h2>Student Dictionary</h2>
+    <p>Enter any word to get the phonetics, definition and an example for the word</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form}}
+        <input class="btn btn-danger" type="submit" value="Submit">
+    </form><br>
+    <div class="content-section p-0 mt-5">
+        {% if input %}
+
+        <div class="custom-header">
+            <h2>{{input}}</h2>
+            {% if phonetics %}
+                <h6>{{phonetics}}</h6>
+            {% endif %}
+
+<!--            <audio id="player" src="{{audio}}"></audio>-->
+<!--            <div>-->
+<!--                <a href="javascript:void(0);" onclick="document.getElementById('player').play();">-->
+<!--            <i class="fa fa-volume-up fa-2x"></i>-->
+<!--        </a>-->
+
+<!--            </div>-->
+
+        </div>
+
+
+
+        <hr class="p-0 m-0">
+        {% if audio %}
+            <audio id="player" src="{{ audio }}"></audio>
+            <a href="javascript:void(0);" onclick="document.getElementById('player').play();">
+                <i class="fa fa-volume-up fa-2x"></i>
+            </a>
+        {% else %}
+             <p><em>Audio not available</em></p>
+        {% endif %}
+
+        <h4>Definition: {{ definition|default:"Not available" }}</h4>
+        <h4>Example: {{ example|default:"Not available" }}</h4>
+        <h4>
+        <p>Synonyms:</p>
+        <ul>
+            {% if synonyms %}
+                {% for synonym in synonyms %}
+                     <li>{{ synonym }}</li>
+                {% endfor %}
+            {% else %}
+                 <li><em>Not available</em></li>
+
+            {% endif %}
+        </ul></h4>
+
+
+<!--        <p class="float-left">-->
+
+<!--            <h4>Definition: {{definition}}</h4>-->
+<!--            <h4>Example: {{example}}</h4>-->
+<!--        Synonyms:-->
+<!--        {% for synonym in synonyms %}-->
+<!--            {{synonyms}}-->
+
+<!--        {% endfor %}-->
+<!--        <hr>-->
+
+<!--    </div>-->
+<!--    {% else %}-->
+<!--    <h2>Sorry, API request limit exceeded</h2>-->
+<!--{% endif %}</p>-->
+</section>
+{% endblock content %}
+
+
